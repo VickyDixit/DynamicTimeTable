@@ -1,0 +1,66 @@
+﻿@model DynamicTimetable.Models.TimetableModel
+
+@{
+    ViewData["Title"] = "Create Timetable";
+}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Timetable</title>
+    <script src="~/js/Index.js"></script>
+</head>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h2 class="mb-0">Create Timetable</h2>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="AssignHours" method="post" class="needs-validation" novalidate id="timetableForm">
+
+                            <div class="mb-3 position-relative">
+                                <label class="form-label fw-bold">Number of Working Days:</label>
+                                <div class="input-group">
+                                    <input asp-for="WorkingDays" type="number" class="form-control" min="1" max="7" required step="1" value="@Model?.WorkingDays" />
+                                </div>
+                                <span class="text-danger d-none position-absolute ms-2 error-icon">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </span>
+                                <span class="error-message d-block mt-1"></span>
+                            </div>
+
+                            <div class="mb-3 position-relative">
+                                <label class="form-label fw-bold">Subjects Per Day:</label>
+                                <div class="input-group">
+                                    <input asp-for="SubjectsPerDay" type="number" class="form-control" min="1" max="8" required step="1" value="@Model?.SubjectsPerDay" />
+                                </div>
+                                <span class="text-danger d-none position-absolute ms-2 error-icon">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </span>
+                                <span class="error-message d-block mt-1"></span>
+                            </div>
+
+                            <div class="mb-3 position-relative">
+                                <label class="form-label fw-bold">Total Subjects:</label>
+                                <div class="input-group">
+                                    <input asp-for="TotalSubjects" type="number" class="form-control" min="1" required step="1" value="@Model?.TotalSubjects" />
+                                </div>
+                                <span class="text-danger d-none position-absolute ms-2 error-icon">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </span>
+                                <span class="error-message d-block mt-1"></span>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary w-50">
+                                    <i class="fas fa-arrow-right"></i> Next
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

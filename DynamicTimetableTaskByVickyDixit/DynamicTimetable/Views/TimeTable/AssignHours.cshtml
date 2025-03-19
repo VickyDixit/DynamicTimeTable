@@ -1,0 +1,81 @@
+﻿@model DynamicTimetable.Models.TimetableModel
+
+@{
+    ViewData["Title"] = "Assign Hours to Subjects";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Hours to Subjects</title>
+    <script src="~/js/AssignHours.js"></script>
+</head>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg" style="max-height: 90vh; overflow-y: auto;">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h2 class="mb-0">Assign Hours to Subjects</h2>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="GenerateTimetable" method="post" class="needs-validation" novalidate id="hoursForm">
+
+                            <input type="hidden" asp-for="WorkingDays" />
+                            <input type="hidden" asp-for="SubjectsPerDay" />
+                            <input type="hidden" asp-for="TotalSubjects" />
+                            <input type="hidden" asp-for="TotalHoursForWeek" />
+
+                            <b>Working Days: <label style="color: green"> @Model.WorkingDays @(Model.WorkingDays > 1 ? "Days" : "Day")</label></b><br />
+                            <b>Subjects Per Day: <label style="color: green"> @Model.SubjectsPerDay @(Model.SubjectsPerDay > 1 ? "Subjects" : "Subject")</label></b><br />
+                            <b>Total Hours of Week: <label style="color: green"><span id="totalWeekHours">@Model.TotalHoursForWeek</span>&nbsp;Hours</label></b>
+
+                            <hr />
+
+                            <div class="row d-flex mb-1">
+                                <div class="col-7">
+                                    <label class="form-label fw-bold">Subjects</label>
+                                </div>
+                                <div style="text-align: right" class="col-5">
+                                    <label style="float: left" class="form-label fw-bold">Hours </label>
+                                    <label style="color: red" class="fw-bold" id="enterdTotalHours"></label>
+                                </div>
+                            </div>
+
+                            @for (int i = 0; i < Model.TotalSubjects; i++)
+                            {
+                                <div class="row mb-3">
+                                    <div class="col-7">
+                                        <input type="text" name="Subjects[@i].SubjectName" class="form-control subject-name" required placeholder="Enter Subject Name" />
+                                        <span class="error-message d-none">Duplicate subject name!</span>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <input type="number" name="Subjects[@i].Hours" class="form-control subject-hours" min="1" max="@Model.TotalHoursForWeek" required placeholder="Enter Hours" />
+                                    </div>
+                                </div>
+                            }
+
+                           @*  <!-- Duplicate Warning -->
+                            <div id="duplicateWarning" class="duplicate-warning text-center d-none">⚠️ Duplicate subject names are not allowed!</div> *@
+
+
+                            <div style="text-align: right">
+                                <label class="form-label fw-bold">Total Assigned Hours:</label>
+                                <span id="enteredTotalHours" class="fw-bold text-danger">(0 Hours)</span>
+                            </div>
+
+                            <div class="text-center mt-3">
+                                <div>
+                                    <button type="submit" id="generateButton" class="btn btn-primary w-50" disabled>
+                                        <i class="fas fa-table"></i> Generate Timetable
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
